@@ -1,10 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Редактировать книгу</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .error {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #2196F3;
+        }
+    </style>
 </head>
 <body>
-$END$
+<h1>Редактировать книгу</h1>
+
+<form th:action="@{/book/{id}(id=${book.bookId})}" th:object="${book}" method="post">
+    <input type="hidden" name="_method" value="put"/>
+
+    <label>Название:</label>
+    <input type="text" th:field="*{name}" required/>
+
+    <label>Автор:</label>
+    <input type="text" th:field="*{author}" required/>
+
+    <label>Год:</label>
+    <input type="number" th:field="*{year}" required/>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<div th:if="${error}" class="error" th:text="${error}"></div>
+
+<a th:href="@{/book}" class="back-link">Назад к списку книг</a>
+
 </body>
 </html>

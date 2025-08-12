@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Редактировать человека</title>
+    <title>Добавить книгу</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,13 +52,6 @@
             opacity: 0.9;
         }
 
-        .error {
-            color: #f44336;
-            font-size: 14px;
-            margin-top: 10px;
-            text-align: center;
-        }
-
         .back-link {
             display: block;
             text-align: center;
@@ -69,24 +62,22 @@
     </style>
 </head>
 <body>
-<h1>Редактировать человека</h1>
+<h1>Добавление книги</h1>
 
-<form th:action="@{/person/{id}(id=${person.personId})}" th:object="${person}" method="post">
-    <input type="hidden" name="_method" value="put"/>
-    <input type="hidden" th:field="*{personId}"/>
+<form th:action="@{/book}" th:object="${book}" method="post">
+    <label>Название:</label>
+    <input type="text" th:field="*{name}" required/>
 
-    <label>Полное имя:</label>
-    <input type="text" th:field="*{fullName}" required/>
+    <label>Автор:</label>
+    <input type="text" th:field="*{author}" required/>
 
-    <label>Год рождения:</label>
-    <input type="number" th:field="*{birthYear}" required/>
+    <label>Год:</label>
+    <input type="number" th:field="*{year}" required/>
 
     <button type="submit">Сохранить</button>
 </form>
 
-<div th:if="${error}" class="error" th:text="${error}"></div>
-
-<a th:href="@{/person}" class="back-link">Назад к списку</a>
+<a th:href="@{/book}" class="back-link">Назад к списку книг</a>
 
 </body>
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Детали книги</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        h1 { text-align: center; margin-bottom: 20px; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        p { font-size: 16px; margin: 10px 0; }
+        .buttons { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
+        .btn { padding: 8px 16px; text-decoration: none; color: white; border-radius: 4px; display: inline-block; text-align: center; border: none; cursor: pointer; }
+        .btn-edit { background-color: #2196F3; }
+        .btn-delete { background-color: #f44336; }
+        .btn-back { background-color: #4CAF50; }
+        .btn-assign { background-color: #FF9800; }
+        .btn-release { background-color: #f44336; }
+        .btn:hover { opacity: 0.9; }
+        form { display: inline; }
+        select { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<h1>Детали книги</h1>
+
+<div class="container">
+    <p><strong>ID:</strong> <span th:text="${book.bookId}"></span></p>
+    <p><strong>Название:</strong> <span th:text="${book.name}"></span></p>
+    <p><strong>Автор:</strong> <span th:text="${book.author}"></span></p>
+    <p><strong>Год издания:</strong> <span th:text="${book.year}"></span></p>
+
+    <p><strong>Владелец:</strong>
+        <span th:if="${book.person != null and book.person.personId != null}">
+            <a th:href="@{/person/{id}(id=${book.person.personId})}" th:text="${book.person.fullName}"></a>
+            <form th:action="@{/book/{id}/release(id=${book.bookId})}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-release">Освободить книгу</button>
+            </form>
+        </span>
+        <span th:if="${book.person == null or book.person.personId == null}">
+            Эта книга свободна
+        </span>
+    </p>
+
+    <div th:if="${book.person == null or book.person.personId == null}">
+        <form th:action="@{/book/{id}/assign(id=${book.bookId})}" method="post">
+            <select name="personId" required>
+                <option value="">Выберите человека</option>
+                <option th:each="person : ${persons}" th:value="${person.personId}" th:text="${person.fullName}"></option>
+            </select>
+            <button type="submit" class="btn btn-assign">Назначить книгу</button>
+        </form>
+    </div>
+
+    <div class="buttons">
+        <a th:href="@{/book/{id}/edit(id=${book.bookId})}" class="btn btn-edit">Редактировать</a>
+
+        <form th:action="@{/book/{id}(id=${book.bookId})}" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+            <button type="submit" class="btn btn-delete" onclick="return confirm('Удалить эту книгу?');">
+                Удалить
+            </button>
+        </form>
+
+        <a th:href="@{/book}" class="btn btn-back">Назад</a>
+    </div>
+</div>
+
+</body>
+</html>

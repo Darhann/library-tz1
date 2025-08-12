@@ -2,21 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Создать нового человека</title>
+    <title>Создание нового человека</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f5f5f5;
         }
 
         h1 {
+            text-align: center;
             margin-bottom: 20px;
         }
 
         form {
-            max-width: 300px;
-            background-color: #f8f8f8;
-            padding: 15px;
+            max-width: 400px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
@@ -29,7 +32,7 @@
 
         input {
             width: 100%;
-            padding: 6px;
+            padding: 8px;
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -37,7 +40,7 @@
 
         button {
             margin-top: 15px;
-            padding: 8px 16px;
+            padding: 10px 15px;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -49,18 +52,19 @@
             opacity: 0.9;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 8px 16px;
-            background-color: #2196F3;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
+        .error {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
         }
 
-        .back-link:hover {
-            opacity: 0.9;
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #2196F3;
         }
     </style>
 </head>
@@ -77,7 +81,9 @@
     <button type="submit">Сохранить</button>
 </form>
 
-<a th:href="@{/person}" class="back-link">Назад к списку людей</a>
+<div th:if="${error}" class="error" th:text="${error}"></div>
+
+<a th:href="@{/person}" class="back-link">Назад к списку</a>
 
 </body>
 </html>
